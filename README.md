@@ -27,13 +27,15 @@ if __name__ == '__main__':
 
 ### Robot API
 
-| Objekte             |
+| Untergeordnete Objekte |
 | ------------------- |
 | `robot.chassis`     |
 | `robot.robotic_arm` |
 | `robot.gripper`     |
 
 ### Chassis API
+
+Beispielskript mit Kommentaren: [`chassis.py`](chassis.py)
 
 | Funktion | Beschreibung |
 | ------------------------------------------------------------ | ---- |
