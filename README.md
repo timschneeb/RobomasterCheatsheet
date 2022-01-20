@@ -4,7 +4,6 @@
 </h1>
 <p align="center">
   <a href="#verbindungsaufbau">Verbindungsaufbau</a> •
-  <a href="#robot-api">Robot</a> •
   <a href="#chassis-api">Chassis</a> •
   <a href="#robotic-arm-api">Robotic arm</a> •
   <a href="#gripper-api">Gripper</a>
@@ -24,14 +23,6 @@ if __name__ == '__main__':
 ```
 
 ## Schnittstellen
-
-### Robot API
-
-| Untergeordnete Objekte |
-| ------------------- |
-| `robot.chassis`     |
-| `robot.robotic_arm` |
-| `robot.gripper`     |
 
 ### Chassis API
 
