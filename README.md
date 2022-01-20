@@ -30,7 +30,7 @@ Beispielskript mit Kommentaren: [`chassis.py`](chassis.py)
 
 | Funktion | Beschreibung |
 | ------------------------------------------------------------ | ---- |
-| ```drive_speed(x, y, z, timeout)``` | Fahre mit best. Geschwindigkeit; `x`,`y` = m/s; `z` = °/s; `timeout` = s |
+| `drive_speed(x, y, z, timeout)` | Fahre mit best. Geschwindigkeit; `x`,`y` = m/s; `z` = °/s; `timeout` = s |
 | `move(x, y, z, xy_speed, z_speed)` | Fahre best. Länge;  `x`,`y` = m; `z` = Grad °; `xy_speed` = m/s; `z_speed` = °/s |
 | `drive_wheels(w1, w2, w3, w4, timeout)` | Bestimme Geschwindigkeiten der Räder; `w1..w4` = rpm |
 
