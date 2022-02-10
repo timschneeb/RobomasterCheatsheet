@@ -54,6 +54,8 @@ Beispielskript mit Kommentaren: [`chassis.py`](chassis.py)
 
 ### Distance sensor API
 
+Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](sensor-drive.py)
+
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
 | `sub_distance(hz, cb)`  | Entfernungsdaten abbonieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
