@@ -6,7 +6,8 @@
   <a href="#verbindungsaufbau">Verbindungsaufbau</a> •
   <a href="#chassis-api">Chassis</a> •
   <a href="#robotic-arm-api">Robotic arm</a> •
-  <a href="#gripper-api">Gripper</a>
+  <a href="#gripper-api">Gripper</a> •
+  <a href="#distance-sensor-api">sensor</a>
 </p>
 
 
@@ -49,4 +50,12 @@ Beispielskript mit Kommentaren: [`chassis.py`](chassis.py)
 | `open(power)`  | Öffne Gripper; `power` = [1, 100]    |
 | `close(power)` | Schließe Gripper; `power` = [1, 100] |
 | `pause()`      | Stoppe Bewegung                      |
+
+
+### Distance sensor API
+
+| Funktion       | Beschreibung                         |
+| -------------- | ------------------------------------ |
+| `sub_distance(hz, cb)`  | Entfernungsdaten abbonieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
+| `unsub_distance()` | Entfernungsdaten deabbonieren|
 
