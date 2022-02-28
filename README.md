@@ -61,3 +61,21 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 | `sub_distance(hz, cb)`  | Entfernungsdaten abbonieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
 | `unsub_distance()` | Entfernungsdaten deabbonieren|
 
+### Vision API
+
+| Funktion       | Beschreibung                         |
+| -------------- | ------------------------------------ |
+| `sub_detect_info(name, color, cb)`  | Bilderkennungsdaten abbonieren; `name` = Modus (siehe Tabelle unten), `color` = Farbe der Marke/Linie, `cb` = Callback-Funktion |
+| `unsub_detect_info(name)` | Bilderkennungsdaten deabbonieren; `name` = Modus  |
+
+| Modus       | Callback-Parameter | Beschreibung                         |
+| -------------- | -------------- | ------------------------------------ |
+| `person`  | `[x, y, Breite, Höhe]` | Personenerkennung |
+| `gesture` | `[x, y, Breite, Höhe]` | Gestenerkennung |
+| `line`    | `[x, y, Tangentenwinkel (theta), Krümmung]` | Linienerkennung |
+| `marker`  | `[x, y, Breite, Höhe, Name d. Markers]` | Markererkennung |
+| `robot`  | `[x, y, Breite, Höhe]` | Robotererkennung |
+
+_________
+
+Quelle: <https://robomaster-dev.readthedocs.io/>
