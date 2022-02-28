@@ -7,7 +7,8 @@
   <a href="#chassis-api">Chassis</a> •
   <a href="#robotic-arm-api">Robotic arm</a> •
   <a href="#gripper-api">Gripper</a> •
-  <a href="#distance-sensor-api">sensor</a>
+  <a href="#distance-sensor-api">Sensor</a> •
+  <a href="#vision-api">Camera</a>
 </p>
 
 
