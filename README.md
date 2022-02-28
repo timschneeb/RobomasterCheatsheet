@@ -8,7 +8,8 @@
   <a href="#robotic-arm-api">Robotic arm</a> •
   <a href="#gripper-api">Gripper</a> •
   <a href="#distance-sensor-api">Sensor</a> •
-  <a href="#vision-api">Camera</a>
+  <a href="#vision-api">Camera</a> •
+  <a href="#led-api">LED</a>
 </p>
 
 
@@ -76,6 +77,13 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 | `line`    | `[x, y, Tangentenwinkel (theta), Krümmung]` | Linienerkennung |
 | `marker`  | `[x, y, Breite, Höhe, Name d. Markers]` | Markererkennung |
 | `robot`  | `[x, y, Breite, Höhe]` | Robotererkennung |
+
+### LED API
+
+| Funktion       | Beschreibung                         |
+| -------------- | ------------------------------------ |
+| `set_led(comp, r, g, b, effect, freq)` | Setze LED-Farbe; `comp` = Bereich (bspw. `all` oder `bottom_right`), `r,g,b` = Farbe; `effect` = Effekt (`on, off, flash, breath, scrolling`); `freq` = Frequenz für `flash`-Effekt [1;10] |
+
 
 _________
 
