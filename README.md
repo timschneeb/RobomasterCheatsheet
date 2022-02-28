@@ -85,6 +85,7 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 | `set_led(comp, r, g, b, effect, freq)` | Setze LED-Farbe; `comp` = Bereich, `r,g,b` = Farbe; `effect` = Lichteffekt; `freq` = Frequenz für `flash`-Effekt |
 
 Mögliche Bereiche: `all, top_all, bottom_left, bottom_right, ...`
+
 Mögliche Effekte: `on, off, flash, breath, scrolling`
 _________
 
