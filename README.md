@@ -60,15 +60,15 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
-| `sub_distance(hz, cb)`  | Entfernungsdaten abbonieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
-| `unsub_distance()` | Entfernungsdaten deabbonieren|
+| `sub_distance(hz, cb)`  | Entfernungsdaten abonnieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
+| `unsub_distance()` | Entfernungsdaten deabonieren|
 
 ### Vision API
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
-| `sub_detect_info(name, color, cb)`  | Bilderkennungsdaten abbonieren; `name` = Modus (siehe Tabelle unten), `color` = Farbe der Marke/Linie, `cb` = Callback-Funktion |
-| `unsub_detect_info(name)` | Bilderkennungsdaten deabbonieren; `name` = Modus  |
+| `sub_detect_info(name, color, cb)`  | Bilderkennungsdaten abonieren; `name` = Modus (siehe Tabelle unten), `color` = Farbe der Marke/Linie, `cb` = Callback-Funktion |
+| `unsub_detect_info(name)` | Bilderkennungsdaten deabonieren; `name` = Modus  |
 
 | Modus       | Callback-Parameter | Beschreibung                         |
 | -------------- | -------------- | ------------------------------------ |
@@ -82,9 +82,10 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
-| `set_led(comp, r, g, b, effect, freq)` | Setze LED-Farbe; `comp` = Bereich (bspw. `all` oder `bottom_right`), `r,g,b` = Farbe; `effect` = Effekt (`on, off, flash, breath, scrolling`); `freq` = Frequenz für `flash`-Effekt [1;10] |
+| `set_led(comp, r, g, b, effect, freq)` | Setze LED-Farbe; `comp` = Bereich, `r,g,b` = Farbe; `effect` = Lichteffekt; `freq` = Frequenz für `flash`-Effekt |
 
-
+Mögliche Bereiche: `all, top_all, bottom_left, bottom_right, ...`
+Mögliche Effekte: `on, off, flash, breath, scrolling`
 _________
 
 Quelle: <https://robomaster-dev.readthedocs.io/>
