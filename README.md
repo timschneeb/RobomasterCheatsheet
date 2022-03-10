@@ -65,6 +65,8 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 
 ### Vision API
 
+Beispielskript, welches das Vehalten des Roboters je nach Marker ändert: [`camera-marker.py`](camera-marker.py)
+
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
 | `sub_detect_info(name, color, cb)`  | Bilderkennungsdaten abonieren; `name` = Modus (siehe Tabelle unten), `color` = Farbe der Marke/Linie, `cb` = Callback-Funktion |
