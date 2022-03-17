@@ -61,7 +61,7 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
 | `sub_distance(hz, cb)`  | Entfernungsdaten abonnieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
-| `unsub_distance()` | Entfernungsdaten deabonieren|
+| `unsub_distance()` | Entfernungsdaten deabonnieren|
 
 ### Vision API
 
@@ -69,8 +69,8 @@ Beispielskript, welches das Vehalten des Roboters je nach Marker ändert: [`came
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
-| `sub_detect_info(name, color, cb)`  | Bilderkennungsdaten abonieren; `name` = Modus (siehe Tabelle unten), `color` = Farbe der Marke/Linie, `cb` = Callback-Funktion |
-| `unsub_detect_info(name)` | Bilderkennungsdaten deabonieren; `name` = Modus  |
+| `sub_detect_info(name, color, cb)`  | Bilderkennungsdaten abonnieren; `name` = Modus (siehe Tabelle unten), `color` = Farbe der Marke/Linie, `cb` = Callback-Funktion |
+| `unsub_detect_info(name)` | Bilderkennungsdaten deabonnieren; `name` = Modus  |
 
 | Modus       | Callback-Parameter | Beschreibung                         |
 | -------------- | -------------- | ------------------------------------ |
