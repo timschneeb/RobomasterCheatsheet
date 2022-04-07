@@ -29,7 +29,9 @@ if __name__ == '__main__':
 
 ### Chassis API
 
-Beispielskript mit Kommentaren: [`chassis.py`](chassis.py)
+Kommentierte Beispielskripte:
+* [Einfache Bewegungen](chassis.py)
+* [Rechteck mit Drehung](rechteck.py)
 
 | Funktion | Beschreibung |
 | ------------------------------------------------------------ | ---- |
@@ -46,6 +48,8 @@ Beispielskript mit Kommentaren: [`chassis.py`](chassis.py)
 | `recenter()`   | Arm zur Mitte zurückbewegen         |
 
 ### Gripper API
+
+Beispielskript, welches ein Objekt greift, transportiert und ablegt: [`gripper.py`](gripper.py)
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
@@ -65,7 +69,7 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 
 ### Vision API
 
-Beispielskript, welches das Vehalten des Roboters je nach Marker ändert: [`camera-marker.py`](camera-marker.py)
+Beispielskript, welches das Vehalten des Roboters (sowie die LEDs) je nach Marker ändert: [`camera-marker.py`](camera-marker.py)
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
