@@ -69,7 +69,9 @@ Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](se
 
 ### Vision API
 
-Beispielskript, welches das Vehalten des Roboters (sowie die LEDs) je nach Marker ändert: [`camera-marker.py`](camera-marker.py)
+Kommentierte Beispielskripte:
+* [Vehalten des Roboters (sowie die LEDs) je nach Marker ändern](camera-marker.py)
+* [Fahrt entlang einer blauen Linie](follow-line.py)
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
