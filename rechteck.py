@@ -2,8 +2,8 @@ from robomaster import robot
 import time
 
 ep_robot = robot.Robot()
-xy_speed = 1/2
-z_speed = 90/2
+xy_speed = 1/2 # m/s
+z_speed = 90/2 # m/s
 
 if __name__ == '__main__':
     #ep_robot.initialize(conn_type="sta", sn="3JKDH6U0011J02")
