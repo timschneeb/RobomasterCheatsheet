@@ -10,6 +10,7 @@ def cb_distance(val):
     global robot
     left = val[0]
 
+    # Sensorwert zu Rädergeschwindigkeit in RPM übersetzen/skalieren
     speed = translate(left, 0, 3200, 60, 200)
 
     # Falls weniger als 40cm entfernt sofort stoppen
