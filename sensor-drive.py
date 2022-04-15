@@ -24,7 +24,7 @@ if __name__ == '__main__':
     robot.initialize(conn_type="sta", sn="3JKDH63001E06B")
 	
     distanceSensor = robot.sensor
-    # cb_distance 5mal pro Sekunde mit Entfernungsdaten versorgen
+    # cb_distance 5mal pro Sekunde asynchron mit Entfernungsdaten versorgen
     distanceSensor.sub_distance(5, cb_distance)
 
     # Programm nach 20 Sekunden stoppen
