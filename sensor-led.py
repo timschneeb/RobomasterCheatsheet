@@ -33,8 +33,8 @@ def cb_distance(val):
 robot.initialize(conn_type="ap")
 
 distanceSensor = robot.sensor
-# cb_distance 50x pro Sekunde mit Entfernungsdaten versorgen
-distanceSensor.sub_distance(50, cb_distance)
+# cb_distance 10x pro Sekunde mit Entfernungsdaten versorgen
+distanceSensor.sub_distance(10, cb_distance)
 
 while True:
     # Sensorwert aus Queue entnehmen
@@ -47,8 +47,8 @@ while True:
 
     # Entfernung zwischen 50mm und 1000mm zu Prozent umwandeln
     percent = translate(distance, 50, 1000, 0, 100)
-    if(percent > 100): percent = 100;
-    if(percent < 0): percent = 0;
+    if(percent > 100): percent = 100
+    if(percent < 0): percent = 0
     # Farbe aus Prozentzahl erhalten
     color = percent_to_rgb(100 - percent)
 
