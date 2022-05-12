@@ -120,7 +120,7 @@ Im folgenden Beispiel wird **Linienerkennung** verwendet:
             avg_c += c
             points += 1
 
-		avg_theta = avg_theta / points
+	avg_theta = avg_theta / points
         avg_c = avg_c / points
 
 ```
