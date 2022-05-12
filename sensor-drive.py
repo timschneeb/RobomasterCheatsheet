@@ -10,11 +10,11 @@ def cb_distance(val):
     global robot
     left = val[0]
 
-    # Sensorwert zu Rädergeschwindigkeit in RPM übersetzen/skalieren
+    # Sensorwert (mm) zu Rädergeschwindigkeit in RPM übersetzen/skalieren
     speed = translate(left, 0, 3200, 60, 200)
 
-    # Falls weniger als 40cm entfernt sofort stoppen
-    if left < 40:
+    # Falls weniger als 50mm entfernt sofort stoppen
+    if left < 50:
         speed = 0
 
     print(str(left) + "cm --> " + str(speed) + "rpm")
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     robot.initialize(conn_type="sta", sn="3JKDH63001E06B")
 	
     distanceSensor = robot.sensor
-    # cb_distance 5mal pro Sekunde asynchron mit Entfernungsdaten versorgen
+    # cb_distance 5x pro Sekunde asynchron mit Entfernungsdaten versorgen
     distanceSensor.sub_distance(5, cb_distance)
 
     # Programm nach 20 Sekunden stoppen
