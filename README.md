@@ -8,7 +8,7 @@
   <a href="#robotic-arm-api">Robotic arm</a> •
   <a href="#gripper-api">Gripper</a> •
   <a href="#distance-sensor-api">Sensor</a> •
-  <a href="#vision-api">Camera</a> •
+  <a href="#vision-api">Vision</a> •
   <a href="#led-api">LED</a>
 </p>
 
@@ -49,7 +49,8 @@ Kommentierte Beispielskripte:
 
 ### Gripper API
 
-Beispielskript, welches ein Objekt greift, transportiert und ablegt: [`gripper.py`](gripper/gripper.py)
+Kommentiertes Beispielskript:
+* [Objekt greifen, transportieren und ablegen](gripper/gripper.py)
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
@@ -72,16 +73,15 @@ Kommentierte Beispielskripte:
 
 #### Callback
 
-Der oben-genannte `cb`-Parameter von `sub_distance` stellt eine Referenz zu einer Funktion dar. Sie erhält die Daten vom Sensor asynchron:
+Der oben-genannte `cb`-Parameter von `sub_distance` muss eine Referenz zu einer Funktion enthalten. Sie erhält die Daten vom Sensor asynchron:
 ```python
 def cb_distance(array):
     left = array[0]
     right = array[1]
     front = array[2]
     back = array[3]
-
 ```
-Die Funktion nimmt ein Integer-Array als Parameter an. Das Array enthält normalerweise Entfernungsdaten für alle Seiten des Roboters. Allerdings, haben unsere Roboter nur einen Sensor an der linken Seite verbaut. Somit sind die anderen drei Werte im Array immer null.
+Die Funktion nimmt ein Integer-Array als Parameter an. Das Array enthält normalerweise Entfernungsdaten für alle Seiten des Roboters. Allerdings haben unsere Roboter nur einen Sensor an der linken Seite verbaut. Somit sind die anderen drei Werte im Array immer null.
 
 
 ### Vision API
@@ -121,9 +121,8 @@ Im folgenden Beispiel wird **Linienerkennung** verwendet:
 
         avg_theta = avg_theta / points
         avg_c = avg_c / points
-
 ```
-`line_data` enthält eine Sammlung von Punkten, die eine Linie beschreiben. Jeder Punkt enthält seine x/y-Koordinaten, den Tangentenwinkel (theta) und die Krümmung (C). Der Codeauszug berechnet die Durchschnittswerte von Theta und C der letzten drei Punkte.
+`line_data` enthält eine Sammlung von Punkten, die eine Linie beschreiben. Jeder Punkt enthält seine x/y-Koordinaten, den Tangentenwinkel (theta) und die Krümmung (C). Der Codeauszug berechnet die Durchschnittswerte von Theta und C **der letzten drei Punkte**.
 
 
 #### Bildübertragung
@@ -141,26 +140,27 @@ ep_camera.start_video_stream(display=False)
 
 # 200x ein Bild vom Roboter abrufen
 for r in range(200):
-# Bild abrufen
-img = ep_camera.read_cv2_image(strategy="newest", timeout=3)
+    # Bild abrufen
+    img = ep_camera.read_cv2_image(strategy="newest", timeout=3)
 
-for i in range(0,1280,30):
-    # Statischer Horizont (repräsentiert durch Punkte) auf Bild zeichnen
-    cv2.circle(img, [int(i), int(720/2)], 3, [255, 255, 255], -1)
+    # Das Bild hat eine Auflösung von 1280x720 Pixeln
+    for i in range(0,1280,30):
+        # Statischer Horizont (repräsentiert durch Punkte) auf Bild zeichnen
+        cv2.circle(img, [int(i), int(720/2)], 3, [255, 255, 255], -1)
 
-# Fertiges Bild als Fenster anzeigen
-cv2.imshow("Linie", img)
-cv2.waitKey(1)
+    # Fertiges Bild als Fenster anzeigen bzw. aktualisieren
+    cv2.imshow("Linie", img)
+    cv2.waitKey(1)
 
-# 100ms warten
-time.sleep(0.1)
+    # 100ms warten
+    time.sleep(0.1)
 
 # Videostream beenden
 ep_camera.stop_video_stream()
 ```
 #### Linie erfassen
 
-Details zu Linienerkennung sind auf [dieser Unterseite zu finden](vision/follow-line).
+Details zur Linienerkennung sind auf [dieser Unterseite zu finden](vision/follow-line).
 
 
 ### LED API
