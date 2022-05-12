@@ -3,7 +3,7 @@
 ![CV2 screenshot](screenshot.png)
 
 ## Übersicht
-Das Programm besteht aus mehreren Teilen. Einige sind nicht vollständig fertiggestellt/funktionsfähig.
+Das Programm besteht aus mehreren Teilen. Einige sind nicht vollständig fertiggestellt/funktionsfähig. Das Programm benötigt die numpy/scipy-Pakete.
 
 ### [`stack.py`](stack.py)
 
@@ -20,7 +20,7 @@ def undo_until_checkpoint(self):
 ```
 ### [`actions.py`](actions.py)
 
-Um den Code zu vereinfachen, wurden Befehle, die den Roboter bewegen in eigene Klassen versetzt, die von einer gemeinsamen Klasse erben. Die Klassenstruktur ist folgendermaßen:
+Um den Code zu vereinfachen, wurden Befehle, die den Roboter bewegen in eigene Klassen versetzt, die von einer gemeinsamen Klasse erben. Die Klassenstruktur ist folgendermaßen aufgebaut:
 ```
             ------ BaseAction ------
           /             |            \
@@ -29,12 +29,12 @@ Um den Code zu vereinfachen, wurden Befehle, die den Roboter bewegen in eigene K
                  DriveSpeedAction  MoveDistanceSyncAction 
 ```
 
-Eine Aktion die von `SyncAction` erbt, führt einen sychronen Befehl aus, der automatisch stoppt, wie zum Beispiel `MoveDistanceSyncAction` (Fahren einer bestimmten Streckenlänge). Das heißt, der Funktionsaufruf blockiert den Code solange, bis der Befehl fertig ist. Die erbende Klasse muss die Funktionen `def exec()` (Befehl ausführen) und `def undo()` (Befehl rückgängig machen) implementieren.
+Eine Aktion die von `SyncAction` erbt, führt einen synchronen Befehl aus, der automatisch stoppt, wie zum Beispiel `MoveDistanceSyncAction` (Fahren einer bestimmten Streckenlänge). Das heißt, der Funktionsaufruf blockiert den Code solange, bis der Befehl fertig ist. Die erbende Klasse muss die Funktionen `def exec()` (Befehl ausführen) und `def undo()` (Befehl rückgängig machen) implementieren.
 
 `AsyncAction` hingegen wird bei asynchronen Befehlen verwendet, die eine unbestimmte Zeit andauern können. Ein derartiger Befehl wird mit der Funktion `def begin()` gestartet und mit `def end()` gestoppt. 
 `DriveSpeedAction` hat  keine bestimmte Dauer und läuft asychron zum restlichen Programm im Hintergrund. In diesem Fall wird die verstrichene Zeit zwischen Aufruf der begin/end() Funktion gespeichert, so dass es möglich ist, mit einem Aufruf von `def undo()`, die Aktion wieder rückgängig zu machen.
 
-Diese Hilfsklassen helfen den Code zu vereinfachen und sind mit dem `ActionStack` kompatibel:
+Diese wiederverwendbaren Hilfsklassen helfen den Code zu vereinfachen und sind mit dem `ActionStack` kompatibel:
 
 ```python
 action = DriveSpeedAction(ep_robot, x=0.5) # mit 0.5m/s in x-Richtung
