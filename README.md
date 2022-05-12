@@ -113,18 +113,17 @@ Im folgenden Beispiel wird **Linienerkennung** verwendet:
         avg_theta = 0
         avg_c = 0
         points = 0
-        i = 0
         for d in line_data[-3:]:
             x, y, theta, c = d
             avg_theta += theta
             avg_c += c
             points += 1
 
-	avg_theta = avg_theta / points
+        avg_theta = avg_theta / points
         avg_c = avg_c / points
 
 ```
-
+`line_data` enthält eine Sammlung von Punkten, die eine Linie beschreiben. Jeder Punkt enthält seine x/y-Koordinaten, den Tangentenwinkel (theta) und die Krümmung (C). Der Codeauszug berechnet die Durchschnittswerte von Theta und C der letzten drei Punkte.
 
 
 #### Bildübertragung
