@@ -30,8 +30,8 @@ if __name__ == '__main__':
 ### Chassis API
 
 Kommentierte Beispielskripte:
-* [Einfache Bewegungen](chassis.py)
-* [Rechteck mit Drehung](rechteck.py)
+* [Einfache Bewegungen](chassis/chassis.py)
+* [Rechteck mit Drehung](chassis/rechteck.py)
 
 | Funktion | Beschreibung |
 | ------------------------------------------------------------ | ---- |
@@ -49,7 +49,7 @@ Kommentierte Beispielskripte:
 
 ### Gripper API
 
-Beispielskript, welches ein Objekt greift, transportiert und ablegt: [`gripper.py`](gripper.py)
+Beispielskript, welches ein Objekt greift, transportiert und ablegt: [`gripper.py`](gripper/gripper.py)
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
@@ -60,18 +60,35 @@ Beispielskript, welches ein Objekt greift, transportiert und ablegt: [`gripper.p
 
 ### Distance sensor API
 
-Beispielskript, welches den Sensor zum Bremsen verwendet: [`sensor-drive.py`](sensor-drive.py)
+Kommentierte Beispielskripte:
+* [Infrarotsensor zum Bremsen verwenden](sensor/sensor-drive.py)
+* [LEDs je nach Entfernung mithilfe eines Rot-Gelb-Grün Farbverlauf färben](sensor/sensor-led.py) (verwendet `Queue` um Daten zwischen zwei Threads asynchron auszutauschen)
+
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
 | `sub_distance(hz, cb)`  | Entfernungsdaten abonnieren; `hz` = Rate, `cb` = Callback-Funktion (Int-Array mit je 4 Werten als Parameter) |
 | `unsub_distance()` | Entfernungsdaten deabonnieren|
 
+#### Callback
+
+Der oben-genannte `cb`-Parameter von `sub_distance` stellt eine Referenz zu einer Funktion dar. Sie erhält die Daten vom Sensor asynchron:
+```python
+def cb_distance(array):
+    left = array[0]
+    right = array[1]
+    front = array[2]
+    back = array[3]
+
+```
+Die Funktion nimmt ein Integer-Array als Parameter an. Das Array enthält normalerweise Entfernungsdaten für alle Seiten des Roboters. Allerdings, haben unsere Roboter nur einen Sensor an der linken Seite verbaut. Somit sind die anderen drei Werte im Array immer null.
+
+
 ### Vision API
 
 Kommentierte Beispielskripte:
-* [Vehalten des Roboters (sowie die LEDs) je nach Marker ändern](camera-marker.py)
-* [Fahrt entlang einer blauen Linie](follow-line.py)
+* [Vehalten des Roboters (sowie die LEDs) je nach Marker ändern](vision/camera-marker.py)
+* [Fahrt entlang einer blauen Linie](vision/follow-line)
 
 | Funktion       | Beschreibung                         |
 | -------------- | ------------------------------------ |
@@ -85,6 +102,32 @@ Kommentierte Beispielskripte:
 | `line`    | `[x, y, Tangentenwinkel (theta), Krümmung]` | Linienerkennung |
 | `marker`  | `[x, y, Breite, Höhe, Name d. Markers]` | Markererkennung |
 | `robot`  | `[x, y, Breite, Höhe]` | Robotererkennung |
+
+#### Callback
+Wie bei der [Distance API](#distance-sensor-api), benötigt `sub_detect_info` auch eine Referenz zu einer Callback-Funktion.
+
+Im folgenden Beispiel wird **Linienerkennung** verwendet:
+
+```python
+    def cb_vision_line_update(line_data):
+        avg_theta = 0
+        avg_c = 0
+        points = 0
+        i = 0
+        for d in line_data[-3:]:
+            x, y, theta, c = d
+            avg_theta += theta
+            avg_c += c
+            points += 1
+
+		avg_theta = avg_theta / points
+        avg_c = avg_c / points
+
+```
+
+
+
+#### Bildübertragung
 
 Zusätzlich können die Kamerabilder in Echtzeit vom Roboter heruntergeladen und angezeigt werden. Dazu kann man auch die `cv2` Bibliothek verwenden, um auf das Bild zu zeichnen. Beispiel:
 ```python
@@ -116,6 +159,10 @@ time.sleep(0.1)
 # Videostream beenden
 ep_camera.stop_video_stream()
 ```
+#### Linie erfassen
+
+Details zu Linienerkennung sind auf [dieser Unterseite zu finden](vision/follow-line).
+
 
 ### LED API
 
