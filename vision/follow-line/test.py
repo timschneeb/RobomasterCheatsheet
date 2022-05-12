@@ -12,11 +12,16 @@ dataset = [
     [0.859375, 0.4333333, 54.1583939, -0.6178457],
     [0.925, 0.3944445, 23.7711563, -1.0266379],
     [0.884375, 0.3166667, 5.9792786, -0.6158768],
+    # x      , y        , theta,   , c
 ]
 
+# Testskript mit festem Datensatz ohne Roboter
 follow = FollowLine(None)
 follow.begin()
+# Initialer Datensatz eingeben
 follow.vision_update(dataset)
 while len(dataset) >= 3:
+    # Bearbeitete Reihe (=Punkt) aus dem Datensatz löschen
     del dataset[1]
+    # Datensatz wieder eingeben (nächster Punkt/Reihe)
     follow.vision_update(dataset)

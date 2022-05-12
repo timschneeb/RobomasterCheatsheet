@@ -137,10 +137,15 @@ class FollowLine(AsyncAction):
         avg_c = 0
         points = 0
         i = 0
+        # Letzte drei Punkte aus vision_data auswählen (falls vorhanden) und Durchschnitte berechnen
+        # Evtl. kann man bessere Ergebnisse erzielen, wenn stattdessen die *ersten* drei Pkte. betrachtet werden
         for d in vision_data[-3:]:
             x, y, theta, c = d
+
+            # x-Koord. des zweiten Pkts. wird als Ankerpunkt für die y-Nachjustierung ausgewählt
             if i == 1:
                 next_x = x
+
             avg_theta += theta
             avg_c += c
             points += 1
@@ -156,7 +161,6 @@ class FollowLine(AsyncAction):
             x_spd = 0.5
             avg_theta = avg_theta / points
             avg_c = avg_c / points
-        
 
         # Falls nächste x-Koord. fast aus Sichtfeld, seitlich nachjustieren
         side_speed_map_old = [
@@ -167,7 +171,7 @@ class FollowLine(AsyncAction):
             [+0.0,  +0.2, 0.3, 0.4, 0.5],  # x-Koord. d. Pkte.
             [-0.75, -0.3, 0.0, 0.0, 0.0]   # seitl. Geschwindigk. (y)
         ]
-        # Skala spiegeln
+        # Skalen spiegeln ([0.0;0.5] auf [0.5;1.0] spiegeln)
         x_coord_map = side_speed_map[0].copy()
         x_coord_map.reverse()
         x_coord_map = [1 - x for x in x_coord_map]
@@ -219,13 +223,7 @@ class FollowLine(AsyncAction):
             self.stack.push(self.last_action)
             self.last_action = None
 
-        # Farbe je nach x-Abweichung setzen
-        #color = calc.speed_to_rgb(y_spd, 0, 0.75)
-        #self.robot.led.set_led('all', color[0], color[1], color[2])
-
-
-
-        # Neuer Befehl
+        # Neuen Fahr-Befehl starten
         action = DriveSpeedAction(self.robot, x_spd, y_spd, z_spd)
         action.begin()
         self.last_action = action

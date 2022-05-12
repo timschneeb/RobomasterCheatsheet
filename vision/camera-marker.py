@@ -70,7 +70,7 @@ def cb_vision(rect_info):
 
     x = get_x_from_rect(rect_info)
     # Prüfe, ob Marker ungefähr in der Mitte des Sichtfeldes liegt
-    if not(x > 0.42 and x < 0.56):
+    if not(0.42 < x < 0.56):
         return
 
     # Prüfe, ob sich das Symbol geändert hat

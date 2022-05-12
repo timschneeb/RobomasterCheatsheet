@@ -2,7 +2,7 @@ from queue import Queue
 import math
 from robomaster import robot
 
-queue = Queue()
+sensorQueue = Queue()
 
 robot = robot.Robot()
 
@@ -27,7 +27,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 # Callback-Funktion, da eingehende Sensordaten erhält und in die Queue füllt
 def cb_distance(val):
     left = val[0]
-    queue.put(left)
+    sensorQueue.put(left)
 
 # robot.initialize(conn_type="sta", sn="3JKDH63001E06B")
 robot.initialize(conn_type="ap")
@@ -39,11 +39,11 @@ distanceSensor.sub_distance(10, cb_distance)
 while True:
     # Sensorwert aus Queue entnehmen
     # Falls die Queue leer ist, blockiert der Aufruf so lange, bis neue Daten vorhanden sind
-    distance = queue.get()
+    distance = sensorQueue.get()
 
     # Falls Queue immer noch gefüllt, leeren um möglichen Datenstau zu vermeiden (sollte cb_distance schneller Daten produzieren, als konsumiert werden kann)
-    if not queue.empty:
-        queue.clear()
+    with sensorQueue.mutex:
+        sensorQueue.queue.clear()
 
     # Entfernung zwischen 50mm und 1000mm zu Prozent umwandeln
     percent = translate(distance, 50, 1000, 0, 100)

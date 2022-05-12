@@ -32,7 +32,7 @@ class ActionStack:
         while self.count() > 0:
             self.pop().undo()
 
-    # Solange Rückgängig machen, bis ein Checkpoint-Objekt auf dem Stack liegt
+    # Solange rückgängig machen, bis ein Checkpoint-Objekt auf dem Stack liegt
     def undo_until_checkpoint(self):
         while self.count() > 0:
             if self.peek().is_checkpoint():
