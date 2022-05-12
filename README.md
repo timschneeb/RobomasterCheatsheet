@@ -95,25 +95,24 @@ from robomaster import robot
 # [...]
 
 ep_camera = ep_robot.camera
-# Videostream starten
 ep_camera.start_video_stream(display=False)
 
 # 200x ein Bild vom Roboter abrufen
 for r in range(200):
-    # Bild abrufen
-    img = ep_camera.read_cv2_image(strategy="newest", timeout=3)
- 
-	for i in range(0,1,0.1):
-		# Statischer Horizont (repräsentiert durch Punkte) auf Bild zeichnen
-		cv2.circle(img, [int(i * 1280), int(720/2)], 3, [255, 255, 255], -1)
+# Bild abrufen
+img = ep_camera.read_cv2_image(strategy="newest", timeout=3)
 
-		# Fertiges Bild als Fenster anzeigen
-		cv2.imshow("Linie", img)
-		cv2.waitKey(1)
+for i in range(0,1280,30):
+    # Statischer Horizont (repräsentiert durch Punkte) auf Bild zeichnen
+    cv2.circle(img, [int(i), int(720/2)], 3, [255, 255, 255], -1)
 
-	# 100ms warten
-    time.sleep(0.1)
-	
+# Fertiges Bild als Fenster anzeigen
+cv2.imshow("Linie", img)
+cv2.waitKey(1)
+
+# 100ms warten
+time.sleep(0.1)
+
 # Videostream beenden
 ep_camera.stop_video_stream()
 ```
