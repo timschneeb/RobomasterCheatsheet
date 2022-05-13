@@ -152,7 +152,7 @@ class FollowLine(AsyncAction):
             i += 1
 
         if points < 1:
-            # Nach weiter nach vorne fahren, keine Linie
+            # Noch weiter nach vorne fahren, keine Linie
             x_spd = 0.5
             avg_theta = 0
             avg_c = 0

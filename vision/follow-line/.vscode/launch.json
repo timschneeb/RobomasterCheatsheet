@@ -6,17 +6,17 @@
     "configurations": [
     
         {
-            "name": "Python: Aktuelle Datei",
+            "name": "Python: main.py",
             "type": "python",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal"
         },
         {
-            "name": "Python: Sensor.py",
+            "name": "Python: test.py",
             "type": "python",
             "request": "launch",
-            "program": "sensor.py",
+            "program": "test.py",
             "console": "integratedTerminal"
         }
     ]

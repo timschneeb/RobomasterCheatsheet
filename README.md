@@ -87,7 +87,7 @@ Die Funktion nimmt ein Integer-Array als Parameter an. Das Array enthält normal
 ### Vision API
 
 Kommentierte Beispielskripte:
-* [Vehalten des Roboters (sowie die LEDs) je nach Marker ändern](vision/camera-marker.py)
+* [Verhalten des Roboters (sowie die LEDs) je nach Marker ändern](vision/camera-marker.py)
 * [Fahrt entlang einer blauen Linie](vision/follow-line)
 
 | Funktion       | Beschreibung                         |
@@ -122,12 +122,12 @@ Im folgenden Beispiel wird **Linienerkennung** verwendet:
         avg_theta = avg_theta / points
         avg_c = avg_c / points
 ```
-`line_data` enthält eine Sammlung von Punkten, die eine Linie beschreiben. Jeder Punkt enthält seine x/y-Koordinaten, den Tangentenwinkel (theta) und die Krümmung (C). Der Codeauszug berechnet die Durchschnittswerte von Theta und C **der letzten drei Punkte**.
+`line_data` ist eine Sammlung von Punkten, die eine Linie beschreiben. Jeder Punkt enthält seine x/y-Koordinaten, den Tangentenwinkel (theta) und die Krümmung (C). Der Codeauszug berechnet die Durchschnittswerte von Theta und C **der letzten drei Punkte**.
 
 
 #### Bildübertragung
 
-Zusätzlich können die Kamerabilder in Echtzeit vom Roboter heruntergeladen und angezeigt werden. Dazu kann man auch die `cv2` Bibliothek verwenden, um auf das Bild zu zeichnen. Beispiel:
+Zusätzlich können die Kamerabilder in Echtzeit vom Roboter heruntergeladen und angezeigt werden. Dazu kann man auch die `cv2`-Bibliothek verwenden, um auf das Bild zu zeichnen. Beispiel:
 ```python
 import time
 import cv2
