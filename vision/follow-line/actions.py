@@ -92,7 +92,8 @@ class FollowLine(AsyncAction):
         self.last_vision = None
         self.last_error = 0
         self.pid_val = [0, 0, 0]
-        self.pid = PID(1, 0, 0.5, setpoint=0.5, sample_time=100) # <- TODO
+        self.last_pid = 0
+        self.pid = PID(115, 0, 12, setpoint=0.5, sample_time=0.1) # <- TODO
         self.update_time = 100
         self.last_update = 0
 
@@ -169,13 +170,20 @@ class FollowLine(AsyncAction):
 
         now = int(round(time.time() * 1000))
         time_diff = now - self.last_update
-        print(time_diff)
+
         if time_diff < self.update_time:
-            print("PID: Cooldown")
+            print("PID: Cooldown2")
             self.lock.release()
             return
 
-        output = self.pid(next_x)
+        output = -1 * self.pid(next_x) # TODO Output invertieren?
+        if output == self.last_pid:
+            print("PID: Cooldown")
+            self.lock.release()
+            return
+        else:
+            self.last_pid = output
+
 
         #error = next_x - 0.5 # 0.5 - x
 
@@ -197,9 +205,8 @@ class FollowLine(AsyncAction):
         # Geschwindigkeitslimit
         z_spd = max(-90, min(90, output))
 
-        print(f"Avg-Theta: {str(round(avg_theta, 2))}°;\t"
-              f"Avg-C: {str(round(avg_c, 2))}; \t"
-              f"Z: {str(round(output, 2))}°/s \t"
+        print(f"X: {str(round(next_x, 2))}; \t"
+              f"PID: {str(round(output, 2))}°/s \t"
               f"=> Z (limit): {str(round(z_spd, 2))}°/s\t"
               f"||\tY: {str(round(y_spd, 2))}m/s\t"
               f"||\tX: {str(round(x_spd, 2))}m/s")

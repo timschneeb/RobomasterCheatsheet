@@ -1,3 +1,5 @@
+import time
+
 from actions import FollowLine
 
 dataset = [
@@ -25,3 +27,5 @@ while len(dataset) >= 3:
     del dataset[1]
     # Datensatz wieder eingeben (nächster Punkt/Reihe)
     follow.vision_update(dataset)
+    time.sleep(0.2)
+
