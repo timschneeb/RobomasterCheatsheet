@@ -4,7 +4,6 @@ from scipy import interpolate
 from threading import Lock
 from abc import abstractmethod
 
-import calc
 from stack import ActionStack
 
 class BaseAction:
