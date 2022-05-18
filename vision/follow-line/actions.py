@@ -3,6 +3,7 @@ import time
 from scipy import interpolate
 from threading import Lock
 from abc import abstractmethod
+from library.pid import PID
 
 from stack import ActionStack
 
@@ -89,7 +90,11 @@ class FollowLine(AsyncAction):
         self.robot = robot
         self.last_action = None
         self.last_vision = None
-        
+        self.last_error = 0
+        self.pid_val = [0, 0, 0]
+        self.pid = PID(1, 0, 0.5, setpoint=0.5, sample_time=100) # <- TODO
+        self.update_time = 100
+        self.last_update = 0
 
     def begin(self):
         self.active = True
@@ -162,60 +167,49 @@ class FollowLine(AsyncAction):
             avg_theta = avg_theta / points
             avg_c = avg_c / points
 
-        # Falls nächste x-Koord. fast aus Sichtfeld, seitlich nachjustieren
-        side_speed_map_old = [
-            [+0.0,  +0.3, +0.38, 0.4, 0.5],  # x-Koord. d. Pkte.
-            [-0.75, -0.5, -0.25, 0.0, 0.0]   # seitl. Geschwindigk. (y)
-        ]
-        side_speed_map = [
-            [+0.0,  +0.2, 0.3, 0.4, 0.5],  # x-Koord. d. Pkte.
-            [-0.75, -0.3, 0.0, 0.0, 0.0]   # seitl. Geschwindigk. (y)
-        ]
-        # Skalen durch Spiegelung vervollständigen ([0.0;0.5] auf [0.5;1.0] spiegeln)
-        x_coord_map = side_speed_map[0].copy()
-        x_coord_map.reverse()
-        x_coord_map = [1 - x for x in x_coord_map]
-        side_speed_map[0] += x_coord_map
+        now = int(round(time.time() * 1000))
+        time_diff = now - self.last_update
+        print(time_diff)
+        if time_diff < self.update_time:
+            print("PID: Cooldown")
+            self.lock.release()
+            return
 
-        y_speed_map = side_speed_map[1].copy()
-        y_speed_map.reverse()
-        y_speed_map = [-y for y in y_speed_map]
-        side_speed_map[1] += y_speed_map
+        output = self.pid(next_x)
 
-        # y-Geschwindigkeit in Abhängigkeit zu x-Koord. bestimmen
-        y_speed_func = interpolate.interp1d(side_speed_map[0], side_speed_map[1])
-        y_spd = y_speed_func(next_x).flat[0]
+        #error = next_x - 0.5 # 0.5 - x
 
-        # Drehgeschw. berechnen; Vorzeichen von C auf Theta übernehmen
-        z_spd_full = math.copysign(avg_theta, avg_c)
+        #self.pid_val[0] = error # P
+        #self.pid_val[1] += error # I
+        #self.pid_val[2] = error - self.last_error # D
+        #self.last_error = error
+
+        Kp = 115
+        Ki = 0
+        Kd = 5
+        #output = self.pid_val[0] * Kp + self.pid_val[1] * Ki + self.pid_val[2] * Kd
+
 
         # TODO
-        #y_spd = 0
-        #x_spd = 0
-        #z_spd = 0
+        y_spd = 0
+        x_spd = 0.5
 
         # Geschwindigkeitslimit
-        y_spd = max(-3.0, min(3.0, y_spd))
-        z_spd = max(-90, min(90, z_spd_full))
+        z_spd = max(-90, min(90, output))
 
-        approxEqual = self.checkIfSpeedsApproxEqual([x_spd, y_spd, z_spd])
-        
-        print(f"{'* ' if approxEqual else ''}Avg-Theta: {str(round(avg_theta, 2))}°;\t"
+        print(f"Avg-Theta: {str(round(avg_theta, 2))}°;\t"
               f"Avg-C: {str(round(avg_c, 2))}; \t"
-              f"Z: {str(round(z_spd_full, 2))}°/s \t"
+              f"Z: {str(round(output, 2))}°/s \t"
               f"=> Z (limit): {str(round(z_spd, 2))}°/s\t"
               f"||\tY: {str(round(y_spd, 2))}m/s\t"
               f"||\tX: {str(round(x_spd, 2))}m/s")
-
-        if approxEqual:
-            # Letzter Befehl ist ungefähr identisch
-            self.lock.release()
-            return
 
         if self.robot is None:
             # Testmodus ohne Robotersteuerung
             self.lock.release()
             return
+
+        self.last_update = now
 
         if self.last_action is not None:
             # Letzter Befehl stoppen und auf Stack legen
