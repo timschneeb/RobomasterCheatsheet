@@ -136,9 +136,10 @@ class FollowLine(AsyncAction):
         avg_c = 0
         points = 0
         i = 0
-        # Letzte drei Punkte aus vision_data auswählen (falls vorhanden) und Durchschnitte berechnen
-        # Evtl. kann man bessere Ergebnisse erzielen, wenn stattdessen die *ersten* drei Pkte. betrachtet werden
-        for d in vision_data[-3:]:
+        # Erste drei Punkte aus vision_data auswählen (falls vorhanden) und Durchschnitte berechnen
+        # Notiz: Erstes Element in vision_data ist line_type (int) und muss ignoriert werden
+        # Evtl. kann man bessere Ergebnisse erzielen, wenn stattdessen die unter bestimmten Bedingungen die letzten drei Pkte. betrachtet werden
+        for d in vision_data[1:4]: # Um letzte 3 Pkt. zu betrachten: "for d in vision_data[-3:]:"
             x, y, theta, c = d
 
             # x-Koord. des zweiten Pkts. wird als Ankerpunkt für die y-Nachjustierung ausgewählt
@@ -151,7 +152,7 @@ class FollowLine(AsyncAction):
             i += 1
 
         if points < 1:
-            # Noch weiter nach vorne fahren, keine Linie
+            # Noch weiter nach vorne fahren, keine Linie sichtbar
             x_spd = 0.5
             avg_theta = 0
             avg_c = 0
@@ -170,7 +171,7 @@ class FollowLine(AsyncAction):
             [+0.0,  +0.2, 0.3, 0.4, 0.5],  # x-Koord. d. Pkte.
             [-0.75, -0.3, 0.0, 0.0, 0.0]   # seitl. Geschwindigk. (y)
         ]
-        # Skalen spiegeln ([0.0;0.5] auf [0.5;1.0] spiegeln)
+        # Skalen durch Spiegelung vervollständigen ([0.0;0.5] auf [0.5;1.0] spiegeln)
         x_coord_map = side_speed_map[0].copy()
         x_coord_map.reverse()
         x_coord_map = [1 - x for x in x_coord_map]
