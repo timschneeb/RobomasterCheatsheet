@@ -2,7 +2,7 @@
 <img align="center" src="screenshot.png"/>
 
 ## Übersicht
-Das Programm besteht aus mehreren Teilen. Einige sind allerdings nicht vollständig fertiggestellt. **Das Programm benötigt die `cv2` und `numpy`/`scipy`-Pakete.**
+Das Programm besteht aus mehreren Teilen. **Es benötigt die `cv2` und `numpy`/`scipy`-Pakete.**
 
 ### [`stack.py`](stack.py)
 
