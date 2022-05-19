@@ -109,18 +109,18 @@ Wie bei der [Distance API](#distance-sensor-api), benötigt `sub_detect_info` au
 Im folgenden Beispiel wird **Linienerkennung** verwendet:
 
 ```python
-    def cb_vision_line_update(line_data):
-        avg_theta = 0
-        avg_c = 0
-        points = 0
-        for d in line_data[-3:]:
-            x, y, theta, c = d
-            avg_theta += theta
-            avg_c += c
-            points += 1
+def cb_vision_line_update(line_data):
+	avg_theta = 0
+	avg_c = 0
+	points = 0
+	for d in line_data[-3:]:
+		x, y, theta, c = d
+		avg_theta += theta
+		avg_c += c
+		points += 1
 
-        avg_theta = avg_theta / points
-        avg_c = avg_c / points
+	avg_theta = avg_theta / points
+	avg_c = avg_c / points
 ```
 `line_data` ist eine Sammlung von Punkten, die eine Linie beschreiben. Jeder Punkt enthält seine x/y-Koordinaten, den Tangentenwinkel (theta) und die Krümmung (C). Der Codeauszug berechnet die Durchschnittswerte von Theta und C **der letzten drei Punkte**.
 
