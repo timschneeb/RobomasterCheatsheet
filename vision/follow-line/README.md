@@ -1,8 +1,8 @@
-# Linienerkennung
+# Algorithmus für Linienverfolgung
 <img align="center" src="screenshot.png"/>
 
 ## Übersicht
-Das Programm besteht aus mehreren Teilen. Einige sind allerdings nicht vollständig fertiggestellt. **Das Programm benötigt die `cv2` und `numpy`/`scipy`-Pakete.**
+Das Programm besteht aus mehreren Teilen. **Es benötigt die `cv2` und `numpy`/`scipy`-Pakete.**
 
 ### [`stack.py`](stack.py)
 
@@ -46,7 +46,7 @@ if bedingung:
     action.undo() # Bewegung rückgängig machen
 ```
 
-#### [`class FollowLine(AsyncAction):`](actions.py#L85)
+#### [`class FollowLine(AsyncAction)`](actions.py#L85) (Hauptkomponente)
 In `actions.py` wird die Klasse `FollowLine` definiert, die die Logik für die Linienverfolgung enthält.
 Da sie von `AsyncAction` erbt, implementiert sie, wie oben beschrieben, die beiden Funktionen `begin` und `end`.
 Diese beiden Funktionen kümmern sich selbst darum einen Callback-Handler bei der Vision API über `sub_detect_info` zu registrieren, sodass die Klasse ohne komplexeren Code verwendet werden kann:
@@ -57,14 +57,25 @@ follow.begin()
 follow.end()
 ```
 
+##### Erste Version
+
+Mein erster Versuch dieses Programm zu schreiben, ist auf der `backup`-Branch in diesem Repository zu finden [(Direktlink)](https://github.com/ThePBone/RobomasterCheatsheet/blob/a408bd1a4964a8dec1e48e2cb6b56917e92fbca5/vision/follow-line/actions.py#L142). 
+Diese Version ist unvollständig und wurde durch [eine Zweite](#zweiter-versuch-pid-regler) ersetzt.
+
 Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
 * Nur letzten (bzw. ersten) drei Punkte der Linie werden betrachtet
 * Durchschnittswerte von Theta und C dieser drei Punkte werden berechnet
 * Theta bestimmt die Drehgeschwindigkeit (Z) und das Vorzeichen der Krümmung C die Richtung der Kurve
 * Falls keine Linie sichtbar ist, fahre langsam geradeaus
 * Geschwindigkeitslimit: nicht schneller als 3m/s (x,y) bzw. 90°/s (z)
-* Falls nächsten Punkte zu weit abseits liegen (siehe `side_speed_map`), wird der Roboter seitlich verschoben (falls `x <= 0.2` oder `x >= 0.8`)
+* Falls nächsten Punkte zu weit abseits liegen (siehe [`side_speed_map`](https://github.com/ThePBone/RobomasterCheatsheet/blob/a408bd1a4964a8dec1e48e2cb6b56917e92fbca5/vision/follow-line/actions.py#L170)), wird der Roboter seitlich verschoben (falls `x <= 0.2` oder `x >= 0.8`)
 * Falls die Geschwindigkeiten aus der vorherigen Iteration fast gleich sind (abs. Toleranz: 0.2), wird keine Änderung vorgenommen, da der Motor sich inkonsistent verhält, wenn er mehrmals in der Sekunde neue Befehle erhält
+
+##### Zweite Version (PID-Regler)
+
+Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolierte Drehgeschwindigkeit (Z) anhand einer X-Koordinate der Linie zu berechnen. Dabei wird `0.5` als Ziel für den PID-Regler angegeben. Dieser versucht die Drehgeschwindigkeit des Roboters so zu anzupassen, dass die X-Koordinate des ausgewählten Punktes der Linie ungefähr bei `0.5`, also der Mitte, gehalten wird. Das Programm betrachtet die zweitnächste X-Koordinate.
+
+Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert.
 
 [Link zum Codeabschnitt](actions.py#L85)
 
