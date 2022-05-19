@@ -60,7 +60,7 @@ follow.end()
 ##### Erste Version
 
 Mein erster Versuch dieses Programm zu schreiben, ist auf der `backup`-Branch in diesem Repository zu finden [(Direktlink)](https://github.com/ThePBone/RobomasterCheatsheet/blob/a408bd1a4964a8dec1e48e2cb6b56917e92fbca5/vision/follow-line/actions.py#L142). 
-Diese Version ist unvollständig und wurde durch [eine zweite Version](#zweiter-versuch-pid-regler) ersetzt.
+Diese Version ist unvollständig und wurde durch [eine zweite Version](#zweite-version-pid-regler) ersetzt.
 
 Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
 * Nur die ersten drei Punkte der Linie werden betrachtet
