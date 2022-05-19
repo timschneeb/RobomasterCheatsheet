@@ -63,7 +63,7 @@ Mein erster Versuch dieses Programm zu schreiben, ist auf der `backup`-Branch in
 Diese Version ist unvollständig und wurde durch [eine Zweite](#zweiter-versuch-pid-regler) ersetzt.
 
 Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
-* Nur letzten (bzw. ersten) drei Punkte der Linie werden betrachtet
+* Nur die ersten drei Punkte der Linie werden betrachtet
 * Durchschnittswerte von Theta und C dieser drei Punkte werden berechnet
 * Theta bestimmt die Drehgeschwindigkeit (Z) und das Vorzeichen der Krümmung C die Richtung der Kurve
 * Falls keine Linie sichtbar ist, fahre langsam geradeaus
@@ -73,7 +73,7 @@ Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
 
 ##### Zweite Version (PID-Regler)
 
-Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolierte Drehgeschwindigkeit (Z) anhand einer X-Koordinate der Linie zu berechnen. Dabei wird `0.5` als Ziel für den PID-Regler angegeben. Dieser versucht die Drehgeschwindigkeit des Roboters so zu anzupassen, dass die X-Koordinate des ausgewählten Punktes der Linie ungefähr bei `0.5`, also der Mitte, gehalten wird. Das Programm betrachtet die zweitnächste X-Koordinate.
+Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolierte Drehgeschwindigkeit (Z) anhand einer X-Koordinate der Linie zu berechnen. Dabei wird `0.5` als Ziel für den PID-Regler angegeben. Dieser versucht die Drehgeschwindigkeit des Roboters so anzupassen, dass die X-Koordinate des ausgewählten Punktes der Linie ungefähr bei `0.5`, also der Mitte, gehalten wird. Das Programm betrachtet die zweitnächste X-Koordinate.
 
 Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert.
 
