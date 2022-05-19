@@ -138,11 +138,10 @@ class FollowLine(AsyncAction):
         i = 0
         # Erste drei Punkte aus vision_data auswählen (falls vorhanden) und Durchschnitte berechnen
         # Notiz: Erstes Element in vision_data ist line_type (int) und muss ignoriert werden
-        # Evtl. kann man bessere Ergebnisse erzielen, wenn stattdessen die unter bestimmten Bedingungen die letzten drei Pkte. betrachtet werden
         for d in vision_data[1:4]: # Um letzte 3 Pkt. zu betrachten: "for d in vision_data[-3:]:"
             x, y, theta, c = d
 
-            # x-Koord. des zweiten Pkts. wird als Ankerpunkt für die y-Nachjustierung ausgewählt
+            # x-Koord. des zweiten Pkts. auswählen
             # TODO Anderen Punkt wählen?
             if i == 1:
                 next_x = x
@@ -150,6 +149,7 @@ class FollowLine(AsyncAction):
             points += 1
             i += 1
 
+        # PID-Algorithmus aufrufen
         output = -1 * self.pid(next_x) # TODO Output invertieren?
         if output == self.last_pid:
             # Cooldown
