@@ -122,7 +122,7 @@ X: 0.93; 	PID: 52.81°/s 	=> Z (limit): 52.81°/s	||	Y: 0m/s	||	X: 0.5m/s
 X: 0.88; 	PID: 41.77°/s 	=> Z (limit): 41.77°/s	||	Y: 0m/s	||	X: 0.5m/s
 X: 0.5; 	PID: -23.02°/s 	=> Z (limit): -23.02°/s	||	Y: 0m/s	||	X: 0.5m/s
 ```
-**Legende:**
+Legende:
 ```
 X:          X-Koordinate des gewählten Punktes
 PID:        Ausgangswert des PID-Algorithmus als Drehgeschwindigkeit
