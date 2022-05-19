@@ -60,14 +60,14 @@ follow.end()
 ##### Erste Version
 
 Mein erster Versuch dieses Programm zu schreiben, ist auf der `backup`-Branch in diesem Repository zu finden [(Direktlink)](https://github.com/ThePBone/RobomasterCheatsheet/blob/a408bd1a4964a8dec1e48e2cb6b56917e92fbca5/vision/follow-line/actions.py#L142). 
-Diese Version ist unvollständig und wurde durch [eine Zweite](#zweiter-versuch-pid-regler) ersetzt.
+Diese Version ist unvollständig und wurde durch [eine zweite Version](#zweiter-versuch-pid-regler) ersetzt.
 
 Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
 * Nur die ersten drei Punkte der Linie werden betrachtet
 * Durchschnittswerte von Theta und C dieser drei Punkte werden berechnet
 * Theta bestimmt die Drehgeschwindigkeit (Z) und das Vorzeichen der Krümmung C die Richtung der Kurve
 * Falls keine Linie sichtbar ist, fahre langsam geradeaus
-* Geschwindigkeitslimit: nicht schneller als 3m/s (x,y) bzw. 90°/s (z)
+* Geschwindigkeitslimit: nicht schneller als 3m/s (X/Y) bzw. 90°/s (Z)
 * Falls nächsten Punkte zu weit abseits liegen (siehe [`side_speed_map`](https://github.com/ThePBone/RobomasterCheatsheet/blob/a408bd1a4964a8dec1e48e2cb6b56917e92fbca5/vision/follow-line/actions.py#L170)), wird der Roboter seitlich verschoben (falls `x <= 0.2` oder `x >= 0.8`)
 * Falls die Geschwindigkeiten aus der vorherigen Iteration fast gleich sind (abs. Toleranz: 0.2), wird keine Änderung vorgenommen, da der Motor sich inkonsistent verhält, wenn er mehrmals in der Sekunde neue Befehle erhält
 
@@ -75,7 +75,7 @@ Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
 
 Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolierte Drehgeschwindigkeit (Z) anhand einer X-Koordinate der Linie zu berechnen. Dabei wird `0.5` als Ziel für den PID-Regler angegeben. Dieser versucht die Drehgeschwindigkeit des Roboters so anzupassen, dass die X-Koordinate des ausgewählten Punktes der Linie ungefähr bei `0.5`, also der Mitte, gehalten wird. Das Programm betrachtet die zweitnächste X-Koordinate.
 
-Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert.
+Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert. Je nach Ausrichtung der Kamera kann es sinnvoll sein, nicht die X-Koordinate des zweitnächsten Punktes zu betrachten, sondern einen Punkt zu wählen, der weiter entfernt bzw. näher liegt.
 
 [Link zum Codeabschnitt](actions.py#L85)
 
