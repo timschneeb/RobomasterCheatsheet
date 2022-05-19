@@ -77,7 +77,7 @@ Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolie
 
 Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet, sondern nur mit dem Test-Datensatz in der `test.py` Skriptdatei. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert. Je nach Ausrichtung der Kamera kann es sinnvoll sein, nicht die X-Koordinate des zweitnächsten Punktes zu betrachten, sondern einen Punkt zu wählen, der weiter entfernt bzw. näher liegt. Der PID-Regler arbeitet momentan in Zeitintervallen von 100ms. Da die Motoren sich unter Umständen inkonsistent verhalten, wenn sie mehrmals in der Sekunde neue Befehle erhalten, kann es empfehlenswert sein, diese Zeitintervalle zu erhöhen.
 
-[Link zum Codeabschnitt](actions.py#L85)
+[Link zum Codeabschnitt](https://github.com/ThePBone/RobomasterCheatsheet/blob/main/vision/follow-line/actions.py#L85)
 
 ### [`main.py`](main.py)
 
