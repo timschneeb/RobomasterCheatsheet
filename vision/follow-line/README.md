@@ -69,13 +69,13 @@ Die Liniendaten werden nach folgenden Regeln zu Motorbewegungen übersetzt:
 * Falls keine Linie sichtbar ist, fahre langsam geradeaus
 * Geschwindigkeitslimit: nicht schneller als 3m/s (X/Y) bzw. 90°/s (Z)
 * Falls nächsten Punkte zu weit abseits liegen (siehe [`side_speed_map`](https://github.com/ThePBone/RobomasterCheatsheet/blob/a408bd1a4964a8dec1e48e2cb6b56917e92fbca5/vision/follow-line/actions.py#L170)), wird der Roboter seitlich verschoben (falls `x <= 0.2` oder `x >= 0.8`)
-* Falls die Geschwindigkeiten aus der vorherigen Iteration fast gleich sind (abs. Toleranz: 0.2), wird keine Änderung vorgenommen, da der Motor sich inkonsistent verhält, wenn er mehrmals in der Sekunde neue Befehle erhält
+* Falls die Geschwindigkeiten aus der vorherigen Iteration fast gleich sind (abs. Toleranz: 0.2), wird keine Änderung vorgenommen, da die Motoren sich inkonsistent verhalten, wenn sie mehrmals in der Sekunde neue Befehle erhalten
 
 ##### Zweite Version (PID-Regler)
 
-Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolierte Drehgeschwindigkeit (Z) anhand einer X-Koordinate der Linie zu berechnen. Dabei wird `0.5` als Ziel für den PID-Regler angegeben. Dieser versucht die Drehgeschwindigkeit des Roboters so anzupassen, dass die X-Koordinate des ausgewählten Punktes der Linie ungefähr bei `0.5`, also der Mitte, gehalten wird. Das Programm betrachtet die zweitnächste X-Koordinate.
+Beim zweiten Anlauf habe ich einen PID-Algorithmus verwendet, um eine interpolierte Drehgeschwindigkeit (Z) anhand einer X-Koordinate eines Punktes auf der Linie zu berechnen. Dabei wird `0.5` als Sollwert für den PID-Regler angegeben. Dieser versucht die Drehgeschwindigkeit des Roboters so anzupassen, dass die X-Koordinate des ausgewählten Punktes der Linie ungefähr bei `0.5`, also der Mitte, gehalten wird. Das Programm betrachtet die zweitnächste X-Koordinate.
 
-Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert. Je nach Ausrichtung der Kamera kann es sinnvoll sein, nicht die X-Koordinate des zweitnächsten Punktes zu betrachten, sondern einen Punkt zu wählen, der weiter entfernt bzw. näher liegt.
+Diese Version wurde aus zeitlichen Gründen nicht mit einem Roboter getestet. Die P, I und D-Parameter des PID-Reglers müssen womöglich manuell angepasst werden, damit das Programm korrekt funktioniert. Je nach Ausrichtung der Kamera kann es sinnvoll sein, nicht die X-Koordinate des zweitnächsten Punktes zu betrachten, sondern einen Punkt zu wählen, der weiter entfernt bzw. näher liegt. Der PID-Regler arbeitet momentan in Zeitintervallen von 100ms. Da die Motoren sich um Umständen inkonsistent verhalten, wenn sie mehrmals in der Sekunde neue Befehle erhalten, kann es empfehlenswert sein, diese Zeitintervalle zu erhöhen.
 
 [Link zum Codeabschnitt](actions.py#L85)
 
