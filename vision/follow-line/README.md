@@ -7,7 +7,7 @@ Das Programm besteht aus mehreren Teilen. **Es benötigt die `cv2` und `numpy`/`
 ### [`stack.py`](stack.py)
 
 Die Klasse `ActionStack` umschließt eine `Deque`, die nach dem "Last In First Out"-Prinzip, wie ein Stapel (Stack) funktioniert. Befehle (als Klassenobjekte des Typs `BaseAction`) können auf diesen Stapel gelegt werden. Soll eine oder mehrere Aktionen rückgängig gemacht werden, können die Befehle vom Stapel nacheinander herabgenommen werden. Diese Befehle können nun umgekehrt an den Roboter gesendet werden, um diese rückgängig zu machen.
-Es ist auch möglich ein `Checkpoint`-Objekt auf diesen Stack zu legen. Dieser kann zum Beispiel an einer Kreuzung gesetzt werden, um später dorthin zurückzukehren, sollte der falsche Weg gewählt worden sein. Der Roboter kehrt automatisch zum letzten Checkpoint zurück, wenn die Methode `undo_until_checkpoint` der Klasse `ActionStack` aufgerufen wird. 
+Es ist auch möglich ein `Checkpoint`-Objekt auf diesen Stack zu legen. Dieses kann zum Beispiel an einer Kreuzung gesetzt werden, um später dorthin zurückzukehren, sollte der falsche Weg gewählt worden sein. Der Roboter kehrt automatisch zum letzten Checkpoint zurück, wenn die Methode `undo_until_checkpoint` der Klasse `ActionStack` aufgerufen wird. 
 
 ```python
 # Solange rückgängig machen, bis ein Checkpoint-Objekt auf dem Stack liegt
@@ -21,7 +21,7 @@ def undo_until_checkpoint(self):
 ```
 ### [`actions.py`](actions.py)
 
-Um den Code zu vereinfachen, wurden Befehle, die den Roboter bewegen in eigene Klassen versetzt, die von einer gemeinsamen Klasse erben. Die Klassenstruktur ist folgendermaßen aufgebaut:
+Um den Code zu vereinfachen, wurden Befehle, die den Roboter bewegen, in eigene Klassen versetzt, die von einer gemeinsamen Klasse erben. Die Klassenstruktur ist folgendermaßen aufgebaut:
 ```
             ------ BaseAction ------
           /             |            \
