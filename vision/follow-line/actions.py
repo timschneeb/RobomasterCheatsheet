@@ -90,12 +90,8 @@ class FollowLine(AsyncAction):
         self.robot = robot
         self.last_action = None
         self.last_vision = None
-        self.last_error = 0
-        self.pid_val = [0, 0, 0]
         self.last_pid = 0
         self.pid = PID(115, 0, 12, setpoint=0.5, sample_time=0.1) # <- TODO
-        self.update_time = 100
-        self.last_update = 0
 
     def begin(self):
         self.active = True
@@ -138,8 +134,6 @@ class FollowLine(AsyncAction):
         self.last_vision = vision_data
 
         next_x = 0.5
-        avg_theta = 0
-        avg_c = 0
         points = 0
         i = 0
         # Erste drei Punkte aus vision_data auswählen (falls vorhanden) und Durchschnitte berechnen
@@ -149,56 +143,21 @@ class FollowLine(AsyncAction):
             x, y, theta, c = d
 
             # x-Koord. des zweiten Pkts. wird als Ankerpunkt für die y-Nachjustierung ausgewählt
+            # TODO Anderen Punkt wählen?
             if i == 1:
                 next_x = x
 
-            avg_theta += theta
-            avg_c += c
             points += 1
             i += 1
 
-        if points < 1:
-            # Noch weiter nach vorne fahren, keine Linie sichtbar
-            x_spd = 0.5
-            avg_theta = 0
-            avg_c = 0
-        else:
-            # Mit konstanter Geschwindigkeit nach vorne
-            x_spd = 0.5
-            avg_theta = avg_theta / points
-            avg_c = avg_c / points
-
-        now = int(round(time.time() * 1000))
-        time_diff = now - self.last_update
-
-        if time_diff < self.update_time:
-            print("PID: Cooldown2")
-            self.lock.release()
-            return
-
         output = -1 * self.pid(next_x) # TODO Output invertieren?
         if output == self.last_pid:
-            print("PID: Cooldown")
+            # Cooldown
             self.lock.release()
             return
         else:
             self.last_pid = output
 
-
-        #error = next_x - 0.5 # 0.5 - x
-
-        #self.pid_val[0] = error # P
-        #self.pid_val[1] += error # I
-        #self.pid_val[2] = error - self.last_error # D
-        #self.last_error = error
-
-        Kp = 115
-        Ki = 0
-        Kd = 5
-        #output = self.pid_val[0] * Kp + self.pid_val[1] * Ki + self.pid_val[2] * Kd
-
-
-        # TODO
         y_spd = 0
         x_spd = 0.5
 
@@ -215,8 +174,6 @@ class FollowLine(AsyncAction):
             # Testmodus ohne Robotersteuerung
             self.lock.release()
             return
-
-        self.last_update = now
 
         if self.last_action is not None:
             # Letzter Befehl stoppen und auf Stack legen
