@@ -113,16 +113,6 @@ class FollowLine(AsyncAction):
             self.last_action.end()
             self.stack.push(self.last_action)
 
-    def checkIfSpeedsApproxEqual(self, s):
-        if self.last_action is None:
-            return False
-
-        for i in range(0,2):
-            close = math.isclose(s[i], self.last_action.speeds[i], abs_tol=0.21)
-            if not close:
-                return False
-        return True
-
     def vision_update(self, vision_data):
         # Ignorieren, falls Bereich noch gesperrt oder falls abgebrochen
         if not self.active or self.lock.locked():
