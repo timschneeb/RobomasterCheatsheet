@@ -107,3 +107,26 @@ for i in range(0, 100):
 ### [`test.py`](test.py)
 
 Um sich nicht ständig mit dem Roboter verbinden zu müssen, enthält `test.py` einen alternativen Einstiegspunkt, mit einem aufgezeichneten Datensatz der Liniendaten, sodass es sich einfacher gestaltet Berechnungen mit der `FollowLine`-Klasse zu testen.
+
+Beispielausgabe des Skriptes:
+```
+$ /usr/bin/python3.8 /home/tim/RobomasterCheatsheet/vision/follow-line/test.py
+FollowLine: Robot nicht definiert
+X: 0.51; 	PID: 0.72°/s 	=> Z (limit): 0.72°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.6; 	PID: 16.57°/s 	=> Z (limit): 16.57°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.66; 	PID: 22.62°/s 	=> Z (limit): 22.62°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.73; 	PID: 30.17°/s 	=> Z (limit): 30.17°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.79; 	PID: 37.71°/s 	=> Z (limit): 37.71°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.86; 	PID: 45.26°/s 	=> Z (limit): 45.26°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.93; 	PID: 52.81°/s 	=> Z (limit): 52.81°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.88; 	PID: 41.77°/s 	=> Z (limit): 41.77°/s	||	Y: 0m/s	||	X: 0.5m/s
+X: 0.5; 	PID: -23.02°/s 	=> Z (limit): -23.02°/s	||	Y: 0m/s	||	X: 0.5m/s
+```
+**Legende:**
+```
+X:          X-Koordinate des gewählten Punktes
+PID:        Ausgangswert des PID-Algorithmus als Drehgeschwindigkeit
+Z (limit):  Drehgeschwindigkeit mit Geschwindigkeitslimit
+Y:          Geschwindigkeit (links/rechts)
+X:          Geschwindigkeit (vor/zurück)
+```
