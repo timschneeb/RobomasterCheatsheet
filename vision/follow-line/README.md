@@ -49,7 +49,7 @@ if bedingung:
 #### [`class FollowLine(AsyncAction)`](https://github.com/ThePBone/RobomasterCheatsheet/blob/main/vision/follow-line/actions.py#L85) (Hauptkomponente)
 In `actions.py` wird die Klasse `FollowLine` definiert, die die Logik für die Linienverfolgung enthält.
 Da sie von `AsyncAction` erbt, implementiert sie, wie oben beschrieben, die Funktionen `begin`, `end` und `undo`.
-Diese beiden Funktionen kümmern sich selbst darum einen Callback-Handler bei der Vision API über `sub_detect_info` zu registrieren, sodass die Klasse ohne komplexeren Code verwendet werden kann:
+Diese beiden Funktionen `begin` und `end` kümmern sich darum einen Callback-Handler bei der Vision API über `sub_detect_info` zu registrieren, sodass die Klasse extern ohne komplexeren Code verwendet werden kann:
 ```python
 follow = FollowLine(ep_robot)
 follow.begin()
